@@ -1,38 +1,44 @@
-Role Name
-=========
+# Ansible Role: Kibana
 
-A brief description of the role goes here.
+[![Build Status](https://travis-ci.org/geerlingguy/ansible-role-kibana.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-kibana)
 
-Requirements
-------------
+An Ansible Role that installs Kibana on RedHat/CentOS or Debian/Ubuntu.
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+## Requirements
 
-Role Variables
---------------
+None.
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+## Role Variables
 
-Dependencies
-------------
+Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+    kibana_version: "4.6"
 
-Example Playbook
-----------------
+The version of kibana to install (major and minor only).
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+    kibana_server_port: 5601
+    kibana_server_host: "0.0.0.0"
 
-    - hosts: servers
+The FQDN or IP address and port Kibana should use.
+
+    kibana_elasticsearch_url: "http://localhost:9200"
+
+The URL (including port) over which Kibana will connect to Elasticsearch.
+
+## Dependencies
+
+None.
+
+## Example Playbook
+
+    - hosts: kibana
       roles:
-         - { role: username.rolename, x: 42 }
+        - geerlingguy.kibana
 
-License
--------
+## License
 
-BSD
+MIT / BSD
 
-Author Information
-------------------
+## Author Information
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+This role was created in 2014 by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
