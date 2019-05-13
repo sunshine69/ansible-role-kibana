@@ -12,7 +12,11 @@ server.host: {{ kibana_server_host }}
 # server.maxPayloadBytes: 1048576
 
 # The Elasticsearch instance to use for all your queries.
+{% if kibana_major_version == '5.x' %}
 elasticsearch.url: {{ kibana_elasticsearch_url }}
+{% else %}
+elasticsearch.hosts: {{ kibana_elasticsearch_url }}
+{% endif %}
 
 # preserve_elasticsearch_host true will send the hostname specified in `elasticsearch`. If you set it to false,
 # then the host you use to connect to *this* Kibana instance will be sent.

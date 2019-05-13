@@ -1,14 +1,28 @@
----
-- include: setup-RedHat.yml
-  when: ansible_os_family == 'RedHat'
+- block:
+    - include: setup-RedHat.yml
+      when: ansible_os_family == 'RedHat'
 
-- include: setup-Debian.yml
-  when: ansible_os_family == 'Debian'
+    - include: setup-Debian.yml
+      when: ansible_os_family == 'Debian'
 
-- name: Install Kibana.
-  package:
-    name: "kibana={{ kibana_version }}"
-    state: present
+    - name: Install Kibana.
+      package:
+        name: "kibana={{ kibana_version }}"
+        state: present
+
+  when: kibana_major_version == '5.x'
+
+# Later version of kibana I have issues with x-pack - that is I could not
+# disable x-pack even with docker version and passed all environments in. The
+# only works is to install the oss version. However oss does not come with
+# repository (as of now)
+- block:
+    - name: Fetching kibana deb
+      apt:
+        deb: 'https://s3-ap-southeast-2.amazonaws.com/xvt-public-repo/pub/elasticsearch/kibana-oss-{{ kibana_version }}-amd64.deb'
+        state: present
+
+  when: kibana_major_version == '7.x'
 
 - name: Ensure Kibana is started and enabled at boot.
   service:
